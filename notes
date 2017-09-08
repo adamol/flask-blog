@@ -1,0 +1,12 @@
+Create test suite for:
+    - registration
+    - logging in
+    - logging out
+    - viewing posts listing
+    - viewing single post
+    - creating new posts
+    - creating new comments
+
+Refactor:
+    - move models to their own folder/files
+    - separate routes to controllers(?)
