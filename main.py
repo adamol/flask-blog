@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test2.db'
 app.config['SECRET_KEY'] = 'random string'
 db = SQLAlchemy(app)
 
@@ -28,6 +28,15 @@ class Post(db.Model):
 
     def __init__(self, title, body):
         self.title = title
+        self.body = body
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    body = db.Column(db.String(250))
+
+    def __init__(self, post_id, body):
+        self.post_id = post_id
         self.body = body
 
 db.create_all()
@@ -121,4 +130,18 @@ def posts_index():
 def posts_show(id):
     post = Post.query.filter_by(id=id).first()
 
-    return render_template('posts_show.html', post=post)
+    comments = Comment.query.filter_by(post_id=id)
+
+    return render_template('posts_show.html', post=post, comments=comments)
+
+@app.route('/posts/<int:post_id>/comments', methods=['POST'])
+def comment(post_id):
+    if not request.form['body']:
+        return redirect(url_for('posts_show', id=post_id))
+
+    comment = Comment(post_id, request.form['body'])
+
+    db.session.add(comment)
+    db.session.commit()
+
+    return redirect(url_for('posts_show', id=post_id))
