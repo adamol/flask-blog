@@ -6,7 +6,11 @@
   </head>
   <body>
     <a href="{{ url_for('register') }}">Register</a><br>
-    <a href="{{ url_for('login') }}">Sign in</a><br>
+    {% if 'username' in session %}
+        <a href="{{ url_for('logout') }}">Log out</a><br>
+    {% else %}
+        <a href="{{ url_for('login') }}">Log in</a><br>
+    {% endif %}
     <a href="{{ url_for('posts_index') }}">View Posts</a><br><br>
 
     {% block content %}{% endblock %}

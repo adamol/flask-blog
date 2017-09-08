@@ -1,17 +1,20 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<h2>Posts Listing</h3>
 <ul>
     {% for post in posts %}
         <li><a href="posts/{{ post.id }}">{{ post.title }}</a></li>
     {% endfor %}
 </ul>
 
-<h3>Add new post</h3>
-<form method="POST" action="posts">
-    <input type="text" name="title" placeholder="title"><br>
-    <textarea name="body" placeholder="body"></textarea><br>
-    <button type="submit">Submit post</button>
-</form>
+{% if 'username' in session %}
+    <h3>Add new post</h3>
+    <form method="POST" action="posts">
+        <input type="text" name="title" placeholder="title"><br>
+        <textarea name="body" placeholder="body"></textarea><br>
+        <button type="submit">Submit post</button>
+    </form>
+{% endif %}
 {% endblock %}
 

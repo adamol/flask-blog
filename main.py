@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, url_for, flash, redirect
+from flask import Flask, jsonify, render_template, request, url_for, flash, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import sha256_crypt
 
@@ -7,6 +7,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 app.config['SECRET_KEY'] = 'random string'
 db = SQLAlchemy(app)
 
+"""
+MODELS
+"""
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
@@ -54,7 +57,10 @@ def register():
         db.session.add(user)
         db.session.commit()
 
+        session['username'] = request.form['username']
+
         flash('User was added')
+
         return redirect(url_for('posts_index'))
     else:
         return render_template('register.html')
@@ -64,7 +70,7 @@ def login():
     if request.method == 'POST':
         user = User.query.filter_by(username=request.form['username']).first()
         if not user:
-            flash('no user with that username')
+            flash('No user with that username.')
 
             return redirect(url_for('login'))
 
@@ -73,15 +79,21 @@ def login():
 
             return redirect(url_for('login'))
 
+        session['username'] = request.form['username']
+
         flash('You are now logged in')
 
-        return jsonify({
-            'username': user.username,
-            'email': user.email,
-            'password': user.password,
-        })
+        return redirect(url_for('posts_index'))
     else:
         return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+
+    flash('You are now logged out.')
+
+    return redirect(url_for('login'))
 
 """
 POST ROUTES
