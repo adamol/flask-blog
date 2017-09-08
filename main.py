@@ -90,6 +90,11 @@ def login():
 
         session['username'] = request.form['username']
 
+        if session['username'] == 'admin':
+            session['isAdmin'] = True
+        else:
+            session['isAdmin'] = False
+
         flash('You are now logged in')
 
         return redirect(url_for('posts_index'))

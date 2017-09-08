@@ -8,7 +8,7 @@
     {% endfor %}
 </ul>
 
-{% if 'username' in session %}
+{% if session.isAdmin %}
     <h3>Add new post</h3>
     <form method="POST" action="posts">
         <input type="text" name="title" placeholder="title"><br>
