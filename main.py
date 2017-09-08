@@ -7,17 +7,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 app.config['SECRET_KEY'] = 'random string'
 db = SQLAlchemy(app)
 
-posts = [
-    {
-        'title': 'First Post',
-        'body': 'Lorem ipsum, dolar sit amet'
-    },
-    {
-        'title': 'Second Post',
-        'body': 'Some more body content'
-    }
-]
-
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
@@ -28,6 +17,15 @@ class User(db.Model):
         self.username = username
         self.email = email
         self.password = password
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(40))
+    body = db.Column(db.String(250))
+
+    def __init__(self, title, body):
+        self.title = title
+        self.body = body
 
 db.create_all()
 
@@ -88,10 +86,27 @@ def login():
 """
 POST ROUTES
 """
-@app.route('/posts')
+@app.route('/posts', methods=['GET', 'POST'])
 def posts_index():
-    return jsonify(posts)
+    if request.method == 'POST':
+        if not request.form['title'] or not request.form['body']:
+            flash('You must enter both a title and a body when submitting a new post')
+
+            return redirect(url_form('posts_index'))
+
+        post = Post(request.form['title'], request.form['body'])
+
+        db.session.add(post)
+        db.session.commit()
+
+        return redirect(url_for('posts_index'))
+    else:
+        posts = Post.query.all()
+
+        return render_template('posts_index.html', posts=posts)
 
 @app.route('/posts/<int:id>')
 def posts_show(id):
-    return jsonify(posts[id])
+    post = Post.query.filter_by(id=id).first()
+
+    return render_template('posts_show.html', post=post)

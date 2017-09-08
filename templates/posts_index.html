@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<ul>
+    {% for post in posts %}
+        <li><a href="posts/{{ post.id }}">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+
+<h3>Add new post</h3>
+<form method="POST" action="posts">
+    <input type="text" name="title" placeholder="title"><br>
+    <textarea name="body" placeholder="body"></textarea><br>
+    <button type="submit">Submit post</button>
+</form>
+{% endblock %}
+
