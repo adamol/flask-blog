@@ -5,13 +5,13 @@
     <title>My Blog</title>
   </head>
   <body>
-    <a href="{{ url_for('register') }}">Register</a><br>
+    <a href="{{ url_for('auth.register') }}">Register</a><br>
     {% if 'username' in session %}
-        <a href="{{ url_for('logout') }}">Log out</a><br>
+        <a href="{{ url_for('auth.logout') }}">Log out</a><br>
     {% else %}
-        <a href="{{ url_for('login') }}">Log in</a><br>
+        <a href="{{ url_for('auth.login') }}">Log in</a><br>
     {% endif %}
-    <a href="{{ url_for('posts_index') }}">View Posts</a><br><br>
+    <a href="{{ url_for('posts.index') }}">View Posts</a><br><br>
 
     {% block content %}{% endblock %}
 
