@@ -11,3 +11,6 @@ class User(db.Model):
         self.email = email
         self.password = password
 
+    def is_admin(self):
+        return self.username == "admin"
+

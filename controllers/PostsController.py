@@ -11,12 +11,24 @@ PostsController = Blueprint('posts', __name__, url_prefix='/posts')
 @PostsController.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        if not request.form['title'] or not request.form['body']:
-            flash('You must enter both a title and a body when submitting a new post')
+        current_user = User.query.filter_by(username=session['username']).first()
+
+        if not current_user.is_admin():
+            flash('You must be an admin in order to add a post.')
 
             return redirect(url_for('posts.index'))
 
-        current_user = User.query.filter_by(username=session['username']).first()
+        if not request.form['title']:
+            flash('You must enter a post title when submitting a new post.')
+
+            return redirect(url_for('posts.index'))
+
+        if not request.form['body']:
+            flash('You must enter a post body when submitting a new post.')
+
+            return redirect(url_for('posts.index'))
+
+
         post = Post(request.form['title'], request.form['body'], current_user.id)
 
         db.session.add(post)

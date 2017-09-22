@@ -17,7 +17,7 @@ def register():
         user = User(
             request.form['username'],
             request.form['email'],
-            sha256_crypt.encrypt(request.form['password'])
+            sha256_crypt.hash(request.form['password'])
         )
 
         db.session.add(user)
@@ -41,18 +41,18 @@ def login():
             return redirect(url_for('auth.login'))
 
         if not sha256_crypt.verify(request.form['password'], user.password):
-            flash('login credentials did not match our records')
+            flash('Password did not match our records.')
 
             return redirect(url_for('auth.login'))
 
         session['username'] = request.form['username']
 
-        if session['username'] == 'admin':
+        if user.is_admin():
             session['isAdmin'] = True
         else:
             session['isAdmin'] = False
 
-        flash('You are now logged in')
+        flash('You are now logged in as ' + session['username'])
 
         return redirect(url_for('posts.index'))
     else:
@@ -62,7 +62,7 @@ def login():
 def logout():
     session.pop('username', None)
 
-    flash('You are now logged out.')
+    flash('You were logged out.')
 
     return redirect(url_for('auth.login'))
 
