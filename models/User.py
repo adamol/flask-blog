@@ -6,6 +6,9 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(255))
 
+    # posts = relationship("Post", backref="author")
+    # comments = relationship("Comment", backref="author")
+
     def __init__(self, username, email, password):
         self.username = username
         self.email = email
