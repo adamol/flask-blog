@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, flash, session, redirect, url_for
 from passlib.hash import sha256_crypt
-from app.models.User import User
+from models.User import User
 from app import db
 
 AuthController = Blueprint('auth', __name__, url_prefix='/auth')
