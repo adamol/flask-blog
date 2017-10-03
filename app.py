@@ -1,8 +1,10 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
-app.config.from_object('config.BaseConfig')
+app.config.from_object(os.environ['APP_SETTINGS'])
+# app.config.from_object('config.BaseConfig')
 db = SQLAlchemy(app)
 
 db.create_all()

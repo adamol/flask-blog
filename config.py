@@ -3,7 +3,8 @@ import os
 class BaseConfig(object):
     DEBUG = False
     SECRET_KEY = 'SOMERANDOMSTRING'
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@localhost/flask_blog'
+    # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@localhost/flask_blog'
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class TestConfig(BaseConfig):
@@ -16,5 +17,5 @@ class TestConfig(BaseConfig):
 class DevConfig(BaseConfig):
     DEBUG = True
 
-class ProductionConfig(BaseConfig):
+class ProdConfig(BaseConfig):
     DEBUG = False
