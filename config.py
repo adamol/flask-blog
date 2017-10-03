@@ -3,7 +3,7 @@ import os
 class BaseConfig(object):
     DEBUG = False
     SECRET_KEY = 'SOMERANDOMSTRING'
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///dev.db'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@localhost/flask_blog'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class TestConfig(BaseConfig):
@@ -13,7 +13,7 @@ class TestConfig(BaseConfig):
     PRESERVE_CONTEXT_ON_EXCEPTION = False
     # WTF_CSRF_ENABLED = False
 
-class DevelopmentConfig(BaseConfig):
+class DevConfig(BaseConfig):
     DEBUG = True
 
 class ProductionConfig(BaseConfig):

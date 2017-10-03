@@ -1,4 +1,4 @@
-#!/home/adam.olsson/code/python/flask-blog/app/venv/bin/python3
+#!/home/adamol/code/flask-blog/venv/bin/python
 
 # -*- coding: utf-8 -*-
 import re
