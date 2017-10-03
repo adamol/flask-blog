@@ -1,5 +1,10 @@
 language: python
 python:
-    - "2.7"
-install: "pip install -r requirements.txt"
-script: "python manage.py test"
+- '2.7'
+install: pip install -r requirements.txt
+script: python manage.py test
+deploy:
+  provider: heroku
+  api_key:
+    secure: wmzzLzvIFS7r4v1x2wvPHvDAb75RyPtjihVTxB06PJMl+uXZIvMwNZgW5nV0RpOJbWDPPt8lShiMUauBilSd39Mk8AjJChtJDGJOgbSY8nvKbne6u7mbDHotJzBAm1QMIWHwijt+oMThNgqcm/+olpMPGtY89XgfpW46QtcTltw16p3XhjzT1hJlS10DP29g6qzS22+Ui4eQ6GrByF+WteR8YWgTp8OsHotEbaYw6q6F0HIX1ZkaORbgAmxm1AIPIUBapgZfZUGRSBkbysvkwZmPD5++Tnk8ZFJ1cpOTARZCcpyeTWhgfeDuEP7PzVjN+Oxf30iSjm+1iYjUDs/trYx48yhsTJa4qzaOLxtS5RzeRq4/1OZJWzmTofIpHBmZDr+f5dM4z9NbysF0eiI2SAjEsFUoZSA73ckJfLJug3ZPfFsnd2B+mUUYRM0KiZANm5pTFj1DWGjkzk5b8nFpWndOwuj6zotwVkaZbIpbjcLW97YwoDxDXdggtftlT+6ugQCHkL9puXKRCEl1LsKTkB513Ch4mudnENGu+xh6FtY8tR2Fg4lEruKRYc35jq8m58Tw5GONSBy0UpCax3r8C6fGkyzHE0NmX/pUHjv7qL+tFFYOfSUXXMpFFtSZVjDjUZjFoMeIcLNlEwgjCtSPzmEp9GGmNXMZjLVjAwuy6Jk=
+  app: my-flask-blog
