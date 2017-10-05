@@ -38,5 +38,6 @@ class ViewArticlesListingTest(BaseTestCase):
         self.assertIn(b'Second PHP Article', response.data)
         self.assertNotIn(b'JavaScript Article', response.data)
 
+
 if __name__ == '__main__':
     unittest.main()
