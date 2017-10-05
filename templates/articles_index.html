@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Article Listing</h3>
+<ul>
+    {% for article in articles %}
+        <li><a href="{{ url_for('articles.show', id=article.id) }}">{{ article.title }}</a></li>
+    {% endfor %}
+</ul>
+
+{% if session.isAdmin %}
+    <h3>Add new article</h3>
+    <form method="POST" action="{{ url_for('articles.index') }}">
+        <input type="text" name="title" placeholder="title"><br>
+        <textarea name="body" placeholder="body"></textarea><br>
+        <button type="submit">Submit article</button>
+    </form>
+{% endif %}
+{% endblock %}
+

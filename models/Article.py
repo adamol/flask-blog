@@ -1,20 +1,22 @@
 from app import db
 
-post_tag = db.Table('post_tag', db.Model.metadata,
-    db.Column('post_id', db.Integer, db.ForeignKey('posts.id')),
+article_tag = db.Table('article_tag', db.Model.metadata,
+    db.Column('article_id', db.Integer, db.ForeignKey('articles.id')),
     db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'))
 )
 
-class Post(db.Model):
-    __tablename__ = 'posts'
+class Article(db.Model):
+    __tablename__ = 'articles'
+
     id = db.Column(db.Integer, primary_key=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     title = db.Column(db.String(40))
     body = db.Column(db.String(250))
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User')
 
-    tags = db.relationship("Tag", secondary=post_tag, backref=db.backref("posts"))
+    tags = db.relationship("Tag", secondary=article_tag, backref=db.backref("articles"))
 
     def __init__(self, title, body, user_id):
         self.title = title

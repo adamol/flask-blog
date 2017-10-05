@@ -32,7 +32,7 @@ def register():
 
         flash('User was added')
 
-        return redirect(url_for('posts.index'))
+        return redirect(url_for('articles.index'))
     else:
         return render_template('register.html')
 
@@ -59,7 +59,7 @@ def login():
 
         flash('You are now logged in as ' + session['username'])
 
-        return redirect(url_for('posts.index'))
+        return redirect(url_for('articles.index'))
     else:
         return render_template('login.html')
 

@@ -1,10 +1,10 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h2>{{ post.title }}</h3>
-<p>Author: {{ post.user.username }}</p>
+<h2>{{ article.title }}</h3>
+<p>Author: {{ article.user.username }}</p>
 
-<p>{{ post.body }}</p>
+<p>{{ article.body }}</p>
 <hr>
 <ul>
     {% for comment in comments %}
@@ -14,7 +14,7 @@
 
 {% if 'username' in session %}
     <h3>Add a comment</h3>
-    <form method="POST" action="{{ url_for('comments.store', post_id=post.id) }}">
+    <form method="POST" action="{{ url_for('comments.store', article_id=article.id) }}">
         <textarea name="body" placeholder="body"></textarea><br>
         <button type="submit">Add comment</button>
     </form>

@@ -14,9 +14,9 @@ def welcome():
     return render_template('welcome.html')
 
 from controllers.AuthController import AuthController
-from controllers.PostsController import PostsController
+from controllers.ArticlesController import ArticlesController
 from controllers.CommentsController import CommentsController
 
 app.register_blueprint(AuthController)
-app.register_blueprint(PostsController)
+app.register_blueprint(ArticlesController)
 app.register_blueprint(CommentsController)

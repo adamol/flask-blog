@@ -9,7 +9,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(255))
 
-    posts = db.relationship("Post", backref="author", lazy="dynamic")
+    articles = db.relationship("Article", backref="author", lazy="dynamic")
     comments = db.relationship("Comment", backref="author", lazy="dynamic")
 
     def __init__(self, username, email, password):
