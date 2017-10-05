@@ -1,5 +1,5 @@
 import unittest
-from base import BaseTestCase
+from tests.base import BaseTestCase
 from app import db
 from models.Post import Post
 from models.User import User

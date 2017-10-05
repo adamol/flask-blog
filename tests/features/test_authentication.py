@@ -1,5 +1,5 @@
 import unittest
-from base import BaseTestCase
+from tests.base import BaseTestCase
 from models.User import User
 from passlib.hash import sha256_crypt
 from app import db

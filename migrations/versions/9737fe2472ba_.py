@@ -1,7 +1,7 @@
 """empty message
 
 Revision ID: 9737fe2472ba
-Revises: 
+Revises:
 Create Date: 2017-10-03 17:21:15.209848
 
 """

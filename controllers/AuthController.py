@@ -25,6 +25,11 @@ def register():
 
         session['username'] = request.form['username']
 
+        if user.is_admin():
+            session['isAdmin'] = True
+        else:
+            session['isAdmin'] = False
+
         flash('User was added')
 
         return redirect(url_for('posts.index'))

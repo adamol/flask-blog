@@ -15,6 +15,7 @@ class TestConfig(BaseConfig):
     # WTF_CSRF_ENABLED = False
 
 class DevConfig(BaseConfig):
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///dev.db'
     DEBUG = True
 
 class ProdConfig(BaseConfig):
