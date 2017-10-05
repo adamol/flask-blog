@@ -1,5 +1,6 @@
 from flask import Blueprint, request, render_template, flash, session, redirect, url_for
 from models.Article import Article
+from models.Article import Tag
 from models.Comment import Comment
 from models.User import User
 from app import db
@@ -29,14 +30,17 @@ def index():
             return redirect(url_for('articles.index'))
 
         if not request.form['tag']:
-            flash('You must enter one or more tags when submitting a new article.')
+            flash('You must enter a tag when submitting a new article.')
 
             return redirect(url_for('articles.index'))
 
 
         article = Article(request.form['title'], request.form['body'], current_user.id)
+        tag  = Tag(request.form['tag'])
+        article.tags.append(tag)
 
         db.session.add(article)
+        db.session.add(tag)
         db.session.commit()
 
         return redirect(url_for('articles.index'))
@@ -58,5 +62,5 @@ def show(id):
     for comment in comments:
         comment.user = User.query.filter_by(id=comment.user_id).first()
 
-    return render_template('articles_index.html', article=article, comments=comments)
+    return render_template('articles_show.html', article=article, comments=comments)
 

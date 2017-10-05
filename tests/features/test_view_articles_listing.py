@@ -19,8 +19,8 @@ class ViewArticlesListingTest(BaseTestCase):
         self.assertIn(b'Another Title', response.data)
 
     def test_users_can_filter_articles_by_tag(self):
-        tagA  = Tag("PHP")
-        tagB  = Tag("JavaScript")
+        tagA  = Tag("php")
+        tagB  = Tag("javascript")
         user  = User("john","john@example.com", sha256_crypt.hash("secret"))
         articleA = Article("First PHP Article", "Lorem ipsum dolor sit amet", 1)
         articleB = Article("JavaScript Article", "Should not be visible", 1)
