@@ -25,7 +25,7 @@ def test():
     unittest.TextTestRunner(verbosity=2).run(tests)
 
 @manager.command
-def feature_tests():
+def run_feature_tests():
     """ Runs the test suite """
     tests = unittest.TestLoader().discover('tests/features')
     unittest.TextTestRunner(verbosity=2).run(tests)

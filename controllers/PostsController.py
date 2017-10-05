@@ -28,6 +28,11 @@ def index():
 
             return redirect(url_for('posts.index'))
 
+        if not request.form['tag']:
+            flash('You must enter one or more tags when submitting a new post.')
+
+            return redirect(url_for('posts.index'))
+
 
         post = Post(request.form['title'], request.form['body'], current_user.id)
 
@@ -36,7 +41,11 @@ def index():
 
         return redirect(url_for('posts.index'))
     else:
-        posts = Post.query.all()
+        if request.args.get('tags'):
+            tag = request.args.get('tags')
+            posts = Post.query.filter(Post.tags.any(name=tag)).all()
+        else:
+            posts = Post.query.all()
 
         return render_template('posts_index.html', posts=posts)
 
