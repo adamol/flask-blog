@@ -9,35 +9,62 @@ from passlib.hash import sha256_crypt
 class ViewArticlesListingTest(BaseTestCase):
 
     def test_users_can_view_articles(self):
-        db.session.add(User("john","john@example.com", sha256_crypt.hash("secret")))
-        db.session.add(Article("Some Title", "Lorem ipsum dolor sit amet", 1))
-        db.session.add(Article("Another Title", "Doesnt matter", 1))
+        articles = [ArticleFactory.create() for i in range(2)]
 
         response = self.client.get('/articles/', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Some Title', response.data)
-        self.assertIn(b'Another Title', response.data)
+
+        for article in articles:
+            self.assertIn(article.title, response.data)
 
     def test_users_can_filter_articles_by_tag(self):
-        tagA  = Tag("php")
-        tagB  = Tag("javascript")
-        user  = User("john","john@example.com", sha256_crypt.hash("secret"))
-        articleA = Article("First PHP Article", "Lorem ipsum dolor sit amet", 1)
-        articleB = Article("JavaScript Article", "Should not be visible", 1)
-        articleC = Article("Second PHP Article", "Lorem ipsum dolor sit amet", 1)
-        articleA.tags.append(tagA)
-        articleB.tags.append(tagB)
-        articleC.tags.append(tagA)
-        user.articles.extend([articleA,articleB,articleC])
-        db.session.add(user)
-        db.session.add_all([articleA, articleB, articleC])
-        db.session.add_all([tagA, tagB])
+        db.session.add_all([Tag(tag) for tag in ["php", "javascript"]])
+        articleA = ArticleFactory.createWithTag("php")
+        articleB = ArticleFactory.createWithTag("javascript")
+        articleC = ArticleFactory.createWithTag("php")
 
         response = self.client.get('/articles/?tags=php', content_type='html/text')
-        self.assertIn(b'First PHP Article', response.data)
-        self.assertIn(b'Second PHP Article', response.data)
-        self.assertNotIn(b'JavaScript Article', response.data)
+        self.assertIn(articleA.title, response.data)
+        self.assertIn(articleC.title, response.data)
+        self.assertNotIn(articleB.title, response.data)
 
 
 if __name__ == '__main__':
     unittest.main()
+
+from random import randint
+import time
+
+class ArticleFactory:
+
+    @staticmethod
+    def create():
+        user  = UserFactory.getAdmin()
+        title = "TITLE:" + str(time.time()*100) + str(randint(1,1000000))
+        body  = "TEST CONTENT"
+
+        article = Article(title, body, user.id)
+        db.session.add(article)
+
+        return article
+
+    @staticmethod
+    def createWithTag(tagName):
+        article = ArticleFactory.create()
+        tag = Tag.query.filter_by(name=tagName).first()
+
+        article.tags.append(tag)
+
+        db.session.add(article)
+
+        return article
+
+class UserFactory:
+
+    @staticmethod
+    def getAdmin():
+        admin = User.query.filter_by(username="admin").first()
+        if not admin:
+            admin  = User("admin","admin@example.com", sha256_crypt.hash("admin"))
+            db.session.add(admin)
+
+        return admin
