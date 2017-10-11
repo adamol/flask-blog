@@ -31,6 +31,3 @@ class CreateCommentsTest(BaseTestCase):
         }, follow_redirects=True)
 
         self.assertIn(b'test comment', response.data)
-
-if __name__ == '__main__':
-    unittest.main()
