@@ -34,7 +34,7 @@ class SubmittingLikesTest(BaseTestCase):
         self.assertEqual(0, len(article.likes))
         self.assertIn(b'Guests cannot submit likes.', response.data)
 
-    #def test_users_can_like_a_comment(self):
+    def test_users_can_like_a_comment(self):
 
     # def test_guests_cannot_like_a_comment(self):
 

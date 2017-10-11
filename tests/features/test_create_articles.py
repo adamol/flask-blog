@@ -1,8 +1,7 @@
 import unittest
 from tests.base import BaseTestCase
 from app import db
-from models.Article import Article, Tag
-from models.User import User
+from project.models import Article, Tag, User
 
 class CreateArticleTest(BaseTestCase):
 

@@ -1,7 +1,5 @@
 from flask import Blueprint, request, render_template, flash, session, redirect, url_for
-from models.Article import Article, Tag
-from models.Comment import Comment
-from models.User import User
+from project.models import Article, Tag, Comment, User
 from app import db
 
 from flask import jsonify

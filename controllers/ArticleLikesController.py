@@ -1,6 +1,5 @@
 from flask import Blueprint, redirect, url_for, session, flash
-from models.Article import Article, Like
-from models.User import User
+from project.models import Article, Like, User
 from app import db
 
 ArticleLikesController = Blueprint('article_likes', __name__)

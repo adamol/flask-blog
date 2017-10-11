@@ -1,6 +1,5 @@
 from flask import Blueprint, request, render_template, flash, session, redirect, url_for
-from models.Comment import Comment
-from models.User import User
+from project.models import Comment, User
 from app import db
 
 CommentsController = Blueprint('comments', __name__)

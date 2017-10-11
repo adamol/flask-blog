@@ -1,6 +1,4 @@
-from models.Article import Article
-from models.Article import Tag
-from models.User import User
+from project.models import Article, Tag, User
 from app import db
 from passlib.hash import sha256_crypt
 from random import randint

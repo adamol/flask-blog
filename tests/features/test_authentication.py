@@ -1,6 +1,6 @@
 import unittest
 from tests.base import BaseTestCase
-from models.User import User
+from project.models import User
 from passlib.hash import sha256_crypt
 from app import db
 

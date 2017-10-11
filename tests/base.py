@@ -1,6 +1,6 @@
 from flask_testing import TestCase
 from app import app, db
-from models.User import User
+from project.models import User
 from passlib.hash import sha256_crypt
 
 class BaseTestCase(TestCase):
