@@ -13,10 +13,10 @@ db.create_all()
 def welcome():
     return render_template('welcome.html')
 
-from controllers.AuthController import AuthController
-from controllers.ArticlesController import ArticlesController
-from controllers.CommentsController import CommentsController
-from controllers.ArticleLikesController import ArticleLikesController
+from project.controllers.AuthController import AuthController
+from project.controllers.ArticlesController import ArticlesController
+from project.controllers.CommentsController import CommentsController
+from project.controllers.ArticleLikesController import ArticleLikesController
 
 app.register_blueprint(AuthController)
 app.register_blueprint(ArticlesController)
