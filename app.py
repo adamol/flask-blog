@@ -16,7 +16,9 @@ def welcome():
 from controllers.AuthController import AuthController
 from controllers.ArticlesController import ArticlesController
 from controllers.CommentsController import CommentsController
+from controllers.ArticleLikesController import ArticleLikesController
 
 app.register_blueprint(AuthController)
 app.register_blueprint(ArticlesController)
 app.register_blueprint(CommentsController)
+app.register_blueprint(ArticleLikesController)
